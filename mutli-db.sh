@@ -31,11 +31,11 @@ tar cvf $TIME_STAMP.tar $TIME_STAMP
 cp $TIME_STAMP.tar $BACKUP_DIR/mongo-$TIME_STAMP-$i.tar
 rm -rf $TIME_STAMP*
 
+#Check If Backup Created Successfully
 if [ $? -eq 0 ]; then 
 	echo "Backup Done successfully"
 else
 	echo "Something Went Wrong"
 fi
 done
-#Check If Backup Created Successfully
 
