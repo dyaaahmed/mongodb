@@ -24,11 +24,10 @@ docker exec -t $CONTAINER_NAME mongodump --host 127.0.0.1 --port=27017 --usernam
 # Coping files from container 
 docker cp $CONTAINER_NAME:$CONTAINER_DIR/$TIME_STAMP ./
 docker exec -t $CONTAINER_NAME rm -rf $CONTAINER_DIR/$TIME_STAMP
-
 #Archiving and removing backup dir
-tar cvf $TIME_STAMP.tar $TIME_STAMP 
-cp $TIME_STAMP.tar $BACKUPDIR 
-rm -rf $TIME_STAMP.tar
+tar cvf $TIME_STAMP.tar $TIME_STAMP
+cp $TIME_STAMP.tar $BACKUP_DIR 
+rm -rf $TIME_STAMP*
 
 
 #Check If Backup Created Successfully
