@@ -1,0 +1,2 @@
+0 1 * * 5 find /var/mongobackup -mindepth 1 -mtime +7 -delete
+0 3 * * * /home/mongobackup.sh
