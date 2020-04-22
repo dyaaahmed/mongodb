@@ -1,3 +1,3 @@
 0 1 * * * sh /database/backup/mongo-v2.sh daily 1>> /var/mongobackup/daily/logs
-0 3 * * * sh /database/backup/mongo-v2.sh weekly 1>> /var/mongobackup/weekly/logs
-0 5 * * * sh /database/backup/mongo-v2.sh monthly 1>> /var/mongobackup/monthly/logs
+0 3 * * 7 sh /database/backup/mongo-v2.sh weekly 1>> /var/mongobackup/weekly/logs
+0 5 * * 28 sh /database/backup/mongo-v2.sh monthly 1>> /var/mongobackup/monthly/logs
