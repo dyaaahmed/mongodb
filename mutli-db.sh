@@ -37,13 +37,13 @@ done
 
 # Delete files older than 7 days
 if [ "$1" == "daily" ]; then
-find $PARENT_BACKUP_DIR/daily/ -mindepth 1 -mtime +7 -delete
+find $PARENT_BACKUP_DIR/daily/ -type f -ctime +1 -name '*.tar' -execdir rm -- '{}' \;
 # Delete files older than 4 weeks
 elif [ "$1" == "weekly" ]; then
-find $PARENT_BACKUP_DIR/weekly/ -mindepth 1 -mtime +21 -delete
+find $PARENT_BACKUP_DIR/weekly/ -type f -ctime +7 -name '*.tar' -execdir rm -- '{}' \;
 # Delete files older than 3 months
 elif [ "$1" == "monthly" ]; then
-find $PARENT_BACKUP_DIR/monthly/ -mindepth 1 -mtime +28 -delete
+find $PARENT_BACKUP_DIR/monthly/ -type f -ctime +28 -name '*.tar' -execdir rm -- '{}' \;
 fi
 
 #Backup DataBase
@@ -52,13 +52,13 @@ docker exec -t $i mkdir -p $CONTAINER_DIR/$TIME_STAMP
 docker exec -t $i mongodump --host 127.0.0.1 --port=27017 --username=$USER_NAME --password=$PASSWORD --authenticationDatabase=$DB --db=$DB --out=$CONTAINER_DIR/$TIME_STAMP
 
 # Coping files from container and removing backup from containers 
-docker cp $i:$CONTAINER_DIR/$TIME_STAMP ./
+docker cp $i:$CONTAINER_DIR/$TIME_STAMP /tmp
 docker exec -t $i rm -rf $CONTAINER_DIR/$TIME_STAMP
 
 #Archiving and removing backup dir
-tar cvf $TIME_STAMP.tar $TIME_STAMP
-cp $TIME_STAMP.tar $BACKUP_DIR/$i/$i-$TIME_STAMP.tar
-rm -rf $TIME_STAMP*
+tar cvf /tmp/$TIME_STAMP.tar /tmp/$TIME_STAMP
+cp /tmp/$TIME_STAMP.tar $BACKUP_DIR/$i/$i-$TIME_STAMP.tar
+rm -rf /tmp/$TIME_STAMP*
 
 #Check If Backup Created Successfully in each container
 if [ $? -eq 0 ]; then 
